@@ -9,7 +9,7 @@ public class Loan extends Account{
 	
 	public double payoff (double arg) {
 		setBalance(getBalance()+arg);
-		transactions.add("Paid off: " + arg);
+		transactions.add("Paid off: " + arg + "\n");
 		return (getBalance());
 	}
 }

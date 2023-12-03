@@ -73,7 +73,7 @@ public class Account {
 		}
 		if (this instanceof CurrentAccount) {
 			if (balance - 10 < 0) {
-				CurrentAccount CA =  new CurrentAccount(getCustomer(), getBalance());
+				CurrentAccount CA =  new CurrentAccount(getCustomer(), getBalance()-10);
 				theBank.getLoan(CA);
 				balance = 0;
 			}
@@ -105,7 +105,10 @@ public class Account {
 		if (this instanceof SavingsAccount){
 			for (int i = 0; i < theBank.theLoans.size(); i++) {
 				if (this.getCustomer().equals(theBank.theLoans.get(i).otherAccount.getCustomer())) {
-					s += "\nLoan: " + ": " + theBank.theLoans.get(i).getBalance() +"\n"; 
+					s += "\nLoan: " + theBank.theLoans.get(i).getBalance() +"\n"; 
+					for (String string: theBank.theLoans.get(i).transactions) {
+						s += string;
+					}
 				}
 			}
 		}

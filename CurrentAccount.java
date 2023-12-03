@@ -59,27 +59,33 @@ public class CurrentAccount extends Account {
 		
 		if(arg1=="Cash Payment") {
 			
-			transactions.add(arg1+ " : " +arg2);
-			// distinguish between two cases
+			
+			//if loan exists do complicated shit
 			for (int i = 0; i < theBank.theLoans.size(); i++) {
-				// 1, if loan exists (matching customer)
 				if (getCustomer().equals(theBank.theLoans.get(i).otherAccount.getCustomer())) {
-					// code here, basically pay off theloans(i) and arg2 += theloans(i) until arg2 becomes 0 then break
-					// use payoff function (payoff returns the balance after paying off)
-					arg2 += theBank.theLoans.get(i).payoff(arg2);
+					arg2 = theBank.theLoans.get(i).payoff(arg2);
+					if (arg2 > 0) {
+						theBank.theLoans.remove(i);
+						i--;
+					}
+					if (arg2<0) {
+						break;
+					}
+				}
 			}
-		}
-			//2 if loan doesn't exist or is paid off (break statement or arg is 0)
-			setBalance(getBalance() + arg2);
+			if (arg2 > 0) {
+				setBalance(arg2);
+				transactions.add(arg1+ " : " +arg2);
+			}
 		} 		
 		else {
 			setBalance(getBalance() + arg2);
 			transactions.add("Recieved from account of " + arg1 + " : " + arg2);
 		}
 	}
-	
+		
 	public void send(double arg1, CurrentAccount arg2) {
-		arg2.recieve(this.getCustomer(), arg1);
+		arg2.recieve(getCustomer(), arg1);
 		setBalance(getBalance() - arg1);
 		transactions.add("Send to account of " + arg2.getCustomer() + " : " + arg1);	
 	

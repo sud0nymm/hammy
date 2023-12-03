@@ -61,14 +61,12 @@ public class Bank {
 		}
 		else {
 
-			s = thisacc.getCustomer() + "\n";
+			s = thisacc.getCustomer() + "\n\n";
 			s = s + thisacc.toString() + "\n";
 			if (thisacc.otherAccount!= null) {
 				s += thisacc.otherAccount.toString();
 			} 
 		}
-		
-		
 		
 		return s;
 	}
